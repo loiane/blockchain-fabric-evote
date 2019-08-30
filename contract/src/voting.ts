@@ -8,6 +8,8 @@ import { Object, Property } from 'fabric-contract-api';
 export class Voting {
 
     @Property()
-    public value: string;
+    public candidateName: string;
 
+    @Property()
+    public votes: number = 0;
 }
