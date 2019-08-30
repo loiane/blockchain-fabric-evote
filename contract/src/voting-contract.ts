@@ -5,7 +5,7 @@
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
 import { Voting } from './voting';
 
-@Info({ title: 'VotingContract', description: 'My Smart Contract' })
+@Info({ title: 'VotingContract', description: 'Simple Voting Smart Contract' })
 export class VotingContract extends Contract {
     @Transaction(false)
     @Returns('boolean')
