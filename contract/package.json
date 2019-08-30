@@ -1,5 +1,5 @@
 {
-    "name": "contract",
+    "name": "voting",
     "version": "0.0.1",
     "description": "My Smart Contract",
     "main": "dist/index.js",
@@ -40,8 +40,7 @@
         "winston": "^3.2.1",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0",
-        "typescript": "^3.1.6",
-        "winston": "^3.2.1"
+        "typescript": "^3.1.6"
     },
     "nyc": {
         "extension": [
