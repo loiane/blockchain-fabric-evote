@@ -2,16 +2,20 @@
     "name": "contract",
     "version": "0.0.1",
     "description": "My Smart Contract",
-    "main": "index.js",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
     "engines": {
         "node": ">=8",
         "npm": ">=5"
     },
     "scripts": {
-        "lint": "eslint .",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "pretest": "npm run lint",
-        "test": "nyc mocha --recursive",
-        "start": "fabric-chaincode-node start"
+        "test": "nyc mocha -r ts-node/register src/**/*.spec.ts",
+        "start": "fabric-chaincode-node start",
+        "build": "tsc",
+        "build:watch": "tsc -w",
+        "prepublishOnly": "npm run build"
     },
     "engineStrict": true,
     "author": "John Doe",
@@ -21,20 +25,32 @@
         "fabric-shim": "1.4.2"
     },
     "devDependencies": {
+        "@types/chai": "^4.1.7",
+        "@types/chai-as-promised": "^7.1.0",
+        "@types/mocha": "^5.2.5",
+        "@types/node": "^10.12.10",
+        "@types/sinon": "^5.0.7",
+        "@types/sinon-chai": "^3.2.1",
         "chai": "^4.2.0",
         "chai-as-promised": "^7.1.1",
-        "eslint": "^5.9.0",
         "mocha": "^5.2.0",
         "nyc": "^14.0.0",
         "sinon": "^7.1.1",
         "sinon-chai": "^3.3.0",
+        "winston": "^3.2.1",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.1.6",
         "winston": "^3.2.1"
     },
     "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
         "exclude": [
-            ".eslintrc.js",
             "coverage/**",
-            "test/**"
+            "dist/**"
         ],
         "reporter": [
             "text-summary",

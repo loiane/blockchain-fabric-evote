@@ -11,10 +11,10 @@ functionalTests
 
 # don't package config files
 .vscode
-.editorconfig
-.eslintignore
-.eslintrc.js
 .gitignore
 .npmignore
+tsconfig.json
+tslint.json
+.editorconfig
 .nyc_output
 coverage
