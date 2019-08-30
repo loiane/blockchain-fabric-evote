@@ -5,14 +5,13 @@
 import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
 import { Voting } from './voting';
 
-@Info({title: 'VotingContract', description: 'My Smart Contract' })
+@Info({ title: 'VotingContract', description: 'My Smart Contract' })
 export class VotingContract extends Contract {
-
     @Transaction(false)
     @Returns('boolean')
     public async candidateExists(ctx: Context, candidateName: string): Promise<boolean> {
         const buffer = await ctx.stub.getState(candidateName);
-        return (!!buffer && buffer.length > 0);
+        return !!buffer && buffer.length > 0;
     }
 
     @Transaction()
@@ -60,4 +59,33 @@ export class VotingContract extends Contract {
         await ctx.stub.deleteState(candidateName);
     }
 
+    @Transaction()
+    public async queryAll(ctx: Context): Promise<string> {
+        console.log('queryAll');
+        const queryString = { selector: {} };
+        const resultsIterator = await ctx.stub.getQueryResult(JSON.stringify(queryString));
+        const allResults = [];
+        while (true) {
+            const res = await resultsIterator.next();
+            if (res.value && res.value.value.toString()) {
+                const jsonRes: any = {};
+                console.log(res.value.value.toString('utf8'));
+                jsonRes.candidate = res.value.key;
+                try {
+                    jsonRes.value = JSON.parse(res.value.value.toString('utf8'));
+                } catch (err) {
+                    console.log(err);
+                    jsonRes.value = res.value.value.toString('utf8');
+                }
+                allResults.push(jsonRes);
+            }
+            if (res.done) {
+                console.log('end of data');
+                await resultsIterator.close();
+                console.info(allResults);
+                console.log(JSON.stringify(allResults));
+                return JSON.stringify(allResults);
+            }
+        }
+    }
 }

@@ -1,6 +1,6 @@
 {
     "name": "voting",
-    "version": "0.0.3",
+    "version": "0.0.5",
     "description": "My Smart Contract",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
