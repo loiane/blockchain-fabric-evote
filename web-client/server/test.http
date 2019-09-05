@@ -1,2 +1,20 @@
 ###
-GET http://localhost:3000
+GET http://localhost:3000/api/
+
+###
+GET http://localhost:3000/api/Loiane
+
+###
+POST http://localhost:3000/api HTTP/1.1
+content-type: application/json
+
+{
+    "candidateName": "Loiane3"
+}
+
+###
+PUT http://localhost:3000/api/Loiane HTTP/1.1
+content-type: application/json
+
+###
+DELETE http://localhost:3000/api/Loiane3
