@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">E3 Voting App</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>A Simple Hello World Voting Application</h2>
+  </div>
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Candidate</th>
+        <th scope="col">Votes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let result of list$ | async">
+        <td>{{ result.candidateName }}</td>
+        <td>{{ result.votes }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h4 class="text-primary">Cast Vote</h4>
+  <div class="form-inline">
+    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Candidate</label>
+    <select [formControl]="candidateVote" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+      <option *ngFor="let o of list$ | async" [value]="o.candidateName">{{ o.candidateName }}</option>
+    </select>
+    <button type="button" class="btn btn-success my-1" (click)="castVote()">Vote!</button>
+  </div>
+  <br>
+  <h4 class="text-secondary">Create new Candidate</h4>
+  <div class="form-inline">
+    <label class="sr-only" for="candidateName">Name</label>
+    <input [formControl]="candidateNew" type="text" class="form-control mb-2 mr-sm-4" id="candidateName" placeholder="Candidate Name">
+    <button type="button" class="btn btn-primary mb-2" (click)="createCandidate()">Create</button>
+  </div>
+</div>
