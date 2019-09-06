@@ -13,13 +13,13 @@
   </button>
 </nav>
 <div class="container">
-  <div *ngFor="let alert of alerts" style="padding-top: 15px">
+  <div class="py-3" *ngFor="let alert of alerts">
     <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">
       {{ alert.msg }}
     </alert>
   </div>
-  <div class="py-5 text-center">
-    <h2>A Simple Hello World Voting Application</h2>
+  <div class="py-3 text-center">
+    <h4>A Simple Hello World Voting Application</h4>
   </div>
   <table class="table table-bordered" *ngIf="list$ | async as list; else loading">
     <thead class="thead-dark">
