@@ -13,10 +13,15 @@
   </button>
 </nav>
 <div class="container">
+  <div *ngFor="let alert of alerts" style="padding-top: 15px">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">
+      {{ alert.msg }}
+    </alert>
+  </div>
   <div class="py-5 text-center">
     <h2>A Simple Hello World Voting Application</h2>
   </div>
-  <table class="table table-bordered">
+  <table class="table table-bordered" *ngIf="list$ | async as list; else loading">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Candidate</th>
@@ -24,25 +29,75 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let result of list$ | async">
+      <tr *ngFor="let result of list">
         <td>{{ result.candidateName }}</td>
         <td>{{ result.votes }}</td>
       </tr>
     </tbody>
   </table>
+  <ng-template #loading>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Candidate</th>
+          <th scope="col">Votes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
   <h4 class="text-primary">Cast Vote</h4>
   <div class="form-inline">
     <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Candidate</label>
-    <select [formControl]="candidateVote" class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-      <option *ngFor="let o of list$ | async" [value]="o.candidateName">{{ o.candidateName }}</option>
+    <select
+      [formControl]="candidateVote"
+      class="custom-select my-1 mr-sm-2"
+      id="inlineFormCustomSelectPref"
+    >
+      <option *ngFor="let o of list$ | async" [value]="o.candidateName">{{
+        o.candidateName
+      }}</option>
     </select>
-    <button type="button" class="btn btn-success my-1" (click)="castVote()">Vote!</button>
+    <button type="button" class="btn btn-success my-1" (click)="castVote()"
+    [disabled]="!candidateVote.valid">Vote!</button>
+    <div class="form-inline" *ngIf="!!savingVote">
+      <div style="padding-left: 20px"></div>
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div style="padding-left: 10px"></div>
+      <span class="text-success">Saving, please wait.</span>
+    </div>
   </div>
-  <br>
+  <br />
   <h4 class="text-secondary">Create new Candidate</h4>
   <div class="form-inline">
     <label class="sr-only" for="candidateName">Name</label>
-    <input [formControl]="candidateNew" type="text" class="form-control mb-2 mr-sm-4" id="candidateName" placeholder="Candidate Name">
-    <button type="button" class="btn btn-primary mb-2" (click)="createCandidate()">Create</button>
+    <input
+      [formControl]="candidateNew"
+      type="text"
+      class="form-control mb-2 mr-sm-4"
+      id="candidateName"
+      placeholder="Candidate Name"
+    />
+    <button type="button" class="btn btn-primary mb-2" (click)="createCandidate()"
+    [disabled]="!candidateNew.valid">Create</button>
+    <div class="form-inline" *ngIf="!!savingCreate">
+      <div style="padding-left: 20px"></div>
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div style="padding-left: 10px"></div>
+      <span class="text-success">Creating new candidate, please wait.</span>
+    </div>
   </div>
 </div>
