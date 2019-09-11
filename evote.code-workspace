@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "contract"
+		},
+		{
+			"path": "web-client"
+		}
+	],
+	"settings": {}
+}
