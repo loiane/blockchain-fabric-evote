@@ -1,6 +1,5 @@
 const os = require('os');
 const path = require('path');
-const fs = require('fs');
 const fabricNetwork = require('fabric-network');
 const express = require('express');
 const router = express.Router();

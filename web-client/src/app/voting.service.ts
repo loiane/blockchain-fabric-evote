@@ -25,7 +25,7 @@ export class VotingService {
         return list;
       }),
       take(1)
-    );;
+    );
   }
 
   loadByID(id) {
